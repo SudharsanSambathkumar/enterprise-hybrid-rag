@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "enterprise-hybrid-rag"
+version = "0.1.0"
+description = "Enterprise Hybrid RAG: Vector RAG + Graph RAG with GPT, explained with a supermarket"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Sudharsan SambathKumar" }]
+keywords = ["rag", "graphrag", "llm", "openai", "knowledge-graph", "vector-search", "enterprise-ai"]
+dependencies = [
+  "openai>=1.40",
+  "numpy>=1.26",
+  "networkx>=3.2",
+  "python-dotenv>=1.0",
+  "fastapi>=0.110",
+  "uvicorn>=0.29",
+  "pydantic>=2.6",
+]
+
+[project.optional-dependencies]
+ui = ["streamlit>=1.35"]
+dev = ["pytest>=8.0", "httpx>=0.27", "ruff>=0.5"]
+
+[project.scripts]
+hybrid-rag = "hybrid_rag.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
