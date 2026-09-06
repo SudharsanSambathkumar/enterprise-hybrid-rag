@@ -10,6 +10,19 @@ multi-hop traversal over a knowledge graph, then uses a **GPT model** to write a
 
 ---
 
+## 💡 Why hybrid?
+
+| Question | What it needs | Lane |
+|---|---|---|
+| *"How many sick leaves do store staff get?"* | One paragraph in the HR policy | 📄 **Vector RAG** |
+| *"FreshDairy milk is recalled. Which stores and managers are affected?"* | Supplier → Product → Store → Manager links. No single document has this | 🕸️ **Graph RAG** |
+| *"Milk recall: what must each affected store manager do?"* | **Who** is affected (graph) + **what to do** (Recall SOP) | 🤝 **Hybrid RAG** |
+
+Vector-only RAG answers the first question well and struggles with the other two. Most real enterprise
+questions look like the third one.
+
+---
+
 ## 📄 License
 
 MIT © 2026 **Sudharsan SambathKumar**
