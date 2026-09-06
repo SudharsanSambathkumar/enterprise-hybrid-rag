@@ -1,0 +1,25 @@
+id,type,name,aliases,description
+freshdairy,Supplier,FreshDairy,fresh dairy|freshdairy supplier,Dairy supplier for the Bangalore region
+bakeco,Supplier,BakeCo,bake co,Bread and bakery supplier
+greenfarms,Supplier,GreenFarms,green farms,Fresh vegetables supplier
+crunchfoods,Supplier,CrunchFoods,crunch foods,Packaged snacks supplier
+milk_1l,Product,Milk 1L,milk|toned milk,1 litre toned milk pouch
+curd_500g,Product,Curd 500g,curd|yogurt,500 g curd cup
+bread,Product,Bread,white bread|sandwich bread,400 g sandwich bread
+tomatoes,Product,Tomatoes,tomato,Fresh tomatoes per kg
+spinach,Product,Spinach,palak,Fresh spinach bunch
+potato_chips,Product,Potato Chips,chips,Salted potato chips 150 g
+dairy,Category,Dairy,,Milk and milk products
+bakery,Category,Bakery,,Bread and baked goods
+produce,Category,Produce,fresh produce|vegetables,Fruits and vegetables
+snacks,Category,Snacks,,Packaged snacks
+indiranagar,Store,Indiranagar,indiranagar store,DailyBasket Indiranagar
+koramangala,Store,Koramangala,koramangala store,DailyBasket Koramangala
+whitefield,Store,Whitefield,whitefield store,DailyBasket Whitefield
+hsr,Store,HSR Layout,hsr|hsr store,DailyBasket HSR Layout
+suresh,Manager,Suresh,,Store manager
+ravi,Manager,Ravi,,Store manager
+priya,Manager,Priya,,Store manager
+anitha,Manager,Anitha,,Store manager
+kavya,RegionalManager,Kavya,regional manager,Regional operations manager for Bangalore
+bangalore,Region,Bangalore Region,bangalore|bengaluru,Bangalore retail region
