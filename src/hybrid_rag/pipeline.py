@@ -121,7 +121,7 @@ class HybridRAG:
         seeds = self.graph.link_entities(question)
         if not seeds:  # fall back to GPT entity extraction + fuzzy matching
             seeds = self.graph.fuzzy_link(extract_query_entities(question, self.llm))
-        facts = self.graph.traverse(seeds, self.settings.graph_hops, self.settings.max_graph_facts)
+        facts = self.graph.traverse(seeds, self.settings.graph_hops, self.settings.max_graph_facts, question=question)
         items = [ContextItem(key=f.key, kind="graph", text=f.text, citation=f.citation) for f in facts]
         return items, [self.graph.g.nodes[s]["name"] for s in seeds]
 

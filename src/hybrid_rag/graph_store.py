@@ -24,6 +24,7 @@ class GraphFact:
     labels: list[str]
     relations: list[str]
     seeds_hit: int = 0
+    relevance: int = 0
 
     @property
     def key(self) -> str:
@@ -158,13 +159,14 @@ class KnowledgeGraph:
         return found
 
     # ----------------------------------------------------------- retrieval
-    def traverse(self, seeds: list[str], hops: int = 3, max_paths: int = 12) -> list[GraphFact]:
+    def traverse(self, seeds: list[str], hops: int = 3, max_paths: int = 12, question: str = "") -> list[GraphFact]:
         """Collect relationship paths around the seed entities.
 
         * Downstream: follow outgoing edges up to `hops` (supplier → product → store → manager).
         * Upstream: follow incoming edges up to `hops - 1` (who supplies / manages this?).
-        Paths that are fully contained in a longer path are dropped, and paths that
-        connect several seed entities are ranked first.
+        Paths fully contained in a longer path are dropped. Ranking prefers paths that
+        connect several seed entities, then paths whose entity types / relations are
+        mentioned in the question (e.g. "stores", "managers", "suppliers").
         """
         seeds = [s for s in seeds if s in self.g]
         raw: list[tuple[list[str], list[str]]] = []
@@ -201,6 +203,13 @@ class KnowledgeGraph:
         kept = [k for i, k in enumerate(keys) if not any(k in longer for longer in keys[:i])]
 
         seed_set = set(seeds)
+        q = question.lower()
+
+        def mentions(nodes: list[str], rels: list[str]) -> int:
+            words = {self.g.nodes[n]["type"].lower() for n in nodes}
+            words |= {w.lower() for r in rels for w in r.split("_")}
+            return sum(1 for w in words if len(w) >= 4 and w[:5] in q)
+
         facts = []
         for k in kept:
             nodes, rels = unique[k]
@@ -210,9 +219,10 @@ class KnowledgeGraph:
                     labels=[self.label(n) for n in nodes],
                     relations=rels,
                     seeds_hit=len(seed_set & set(nodes)),
+                    relevance=mentions(nodes, rels),
                 )
             )
-        facts.sort(key=lambda f: (-f.seeds_hit, len(f.relations), f.text))
+        facts.sort(key=lambda f: (-f.seeds_hit, -f.relevance, len(f.relations), f.text))
         return facts[:max_paths]
 
     def stats(self) -> dict:
