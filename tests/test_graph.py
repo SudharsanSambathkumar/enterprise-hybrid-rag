@@ -50,3 +50,11 @@ def test_save_and_load_roundtrip(tmp_path):
     assert loaded.stats() == graph.stats()
     assert loaded.link_entities("bread") == ["bread"]
 
+
+def test_question_terms_boost_matching_paths():
+    graph = kg()
+    q = "FreshDairy milk is recalled. Which stores and managers are affected?"
+    facts = graph.traverse(graph.link_entities(q), hops=3, question=q)
+    top = [f.text for f in facts[:2]]
+    assert all("(Store) -[MANAGED_BY]->" in t for t in top)
+    assert {"Ravi", "Priya"} <= {f.labels[-1].split(" (")[0] for f in facts[:2]}
