@@ -6,8 +6,6 @@ A complete, runnable reference implementation of **Hybrid Retrieval-Augmented Ge
 explained with a supermarket chain (*DailyBasket*). It combines semantic search over policy documents with
 multi-hop traversal over a knowledge graph, then uses a **GPT model** to write a grounded answer with citations.
 
-> 🚧 **Work in progress.** Building this over weekends.
-
 ---
 
 ## 💡 Why hybrid?
@@ -189,6 +187,37 @@ access: [all]            # or [manager, hr]; 'admin' always sees everything
 
 **Graph:** edit `data/graph/nodes.csv` (`id,type,name,aliases,description`, with aliases separated by `|`)
 and `edges.csv` (`source,relation,target`). Then run `hybrid-rag ingest` again.
+
+---
+
+## ⚙️ Configuration
+
+| Variable | Default | Notes |
+|---|---|---|
+| `LLM_PROVIDER` | `openai` | `fake` = offline mode |
+| `OPENAI_API_KEY` | | required for `openai` |
+| `OPENAI_CHAT_MODEL` | `gpt-4o-mini` | any chat-completions GPT model |
+| `OPENAI_EMBED_MODEL` | `text-embedding-3-small` | |
+| `OPENAI_TEMPERATURE` | `0` | `none` for models that reject temperature |
+| `OPENAI_BASE_URL` | | Azure OpenAI / compatible gateway |
+| `TOP_K` | `4` | document chunks per query |
+| `GRAPH_HOPS` | `3` | max downstream hops |
+| `MAX_GRAPH_FACTS` | `12` | graph paths per query |
+| `CHUNK_SIZE` / `CHUNK_OVERLAP` | `600` / `120` | characters |
+
+The index stores which embedder built it, and rebuilds automatically if you switch providers or models.
+
+---
+
+## 🧪 Testing
+
+```bash
+make test        # LLM_PROVIDER=fake pytest -q
+make lint
+```
+
+The suite covers chunking, ACL, entity linking, multi-hop traversal, RRF, routing, the OpenAI client wiring
+(mocked), the end-to-end pipeline and the API. It needs no API key, so it runs in CI as-is.
 
 ---
 
