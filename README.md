@@ -6,6 +6,8 @@ A complete, runnable reference implementation of **Hybrid Retrieval-Augmented Ge
 explained with a supermarket chain (*DailyBasket*). It combines semantic search over policy documents with
 multi-hop traversal over a knowledge graph, then uses a **GPT model** to write a grounded answer with citations.
 
+![Enterprise RAG explained with a supermarket](assets/demo.gif)
+
 ---
 
 ## 💡 Why hybrid?
@@ -139,6 +141,13 @@ make ui       # streamlit run app/streamlit_app.py
 ```
 
 Shows the chosen route, the answer, the document evidence and the graph paths side by side, with a role picker.
+
+### Docker
+
+```bash
+docker build -t enterprise-hybrid-rag .
+docker run --rm -p 8000:8000 --env-file .env enterprise-hybrid-rag
+```
 
 ---
 
