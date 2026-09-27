@@ -8,6 +8,10 @@ multi-hop traversal over a knowledge graph, then uses a **GPT model** to write a
 
 ![Enterprise RAG explained with a supermarket](assets/demo.gif)
 
+[![CI](https://img.shields.io/badge/tests-pytest-blue)](#-testing)
+![Python](https://img.shields.io/badge/python-3.10%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+
 ---
 
 ## 💡 Why hybrid?
@@ -197,8 +201,6 @@ access: [all]            # or [manager, hr]; 'admin' always sees everything
 **Graph:** edit `data/graph/nodes.csv` (`id,type,name,aliases,description`, with aliases separated by `|`)
 and `edges.csv` (`source,relation,target`). Then run `hybrid-rag ingest` again.
 
----
-
 ## ⚙️ Configuration
 
 | Variable | Default | Notes |
@@ -227,6 +229,15 @@ make lint
 
 The suite covers chunking, ACL, entity linking, multi-hop traversal, RRF, routing, the OpenAI client wiring
 (mocked), the end-to-end pipeline and the API. It needs no API key, so it runs in CI as-is.
+
+## 🛣️ Production roadmap
+
+- Vector store → **pgvector / Azure AI Search / Qdrant** (same `search` interface)
+- Graph store → **Neo4j / Cosmos DB (Gremlin)** with Cypher templates
+- Re-ranking with a **cross-encoder** after RRF
+- Evaluation with **RAGAS** (faithfulness, context precision) on a golden question set
+- Document-level ACLs synced from SharePoint / Confluence permissions
+- Tracing with LangSmith or OpenTelemetry
 
 ---
 
